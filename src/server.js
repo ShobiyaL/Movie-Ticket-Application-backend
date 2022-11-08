@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 
 const userRoutes = require('./routes/userRoutes');
 const movieRoutes = require('./routes/movieRoutes');
-// const screenRoutes = require('./routes/screenRoutes');
+const theaterRoutes = require('./routes/theaterRoutes');
 // const showTimingRoutes = require('./routes/showTimingRoutes');
 // const reservationRoutes = require('./routes/reservationRoutes');
 // const checkoutRoutes = require('./routes/checkoutRoutes');
@@ -40,7 +40,7 @@ app.options('*', cors());
 // Routes
  app.use('/api/user', userRoutes);
 app.use('/api/movie', movieRoutes);
-// app.use('/api/screen', screenRoutes);
+app.use('/api/theater', theaterRoutes);
 // app.use('/api/show-timing', showTimingRoutes);
 // app.use('/api/reservation', reservationRoutes);
 // app.use('/api/checkout', checkoutRoutes);
