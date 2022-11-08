@@ -14,8 +14,7 @@ const theaterRoutes = require('./routes/theaterRoutes');
 // const checkoutRoutes = require('./routes/checkoutRoutes');
 // const stripeEventRoutes = require('./routes/stripeEventRoutes');
 
-// const AppError = require('./utils/appError');
-// const globalErrorHandler = require('./controllers/errorController');
+ const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
 
@@ -48,10 +47,10 @@ app.use('/api/theater', theaterRoutes);
 
 
 // Handle all unhandled routes
-// app.use('*', (req, _res, next) => {
-//   next(new AppError(`Requested url ${req.originalUrl} doesn't exist`, 404));
-// });
+app.use('*', (req, _res, next) => {
+  _res.send(`Requested url ${req.originalUrl} doesn't exist`, 404);
+});
 
 // Global error handling middleware
-// app.use(globalErrorHandler);
+app.use(globalErrorHandler);
 module.exports = app;
