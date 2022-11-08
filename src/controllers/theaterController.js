@@ -3,10 +3,11 @@ const Theater = require('../models/theater');
 // To add theater
 exports.addTheater = async (req, res) => {
   try {
-    const theater = new Screen(req.body);
+    const theater = new Theater(req.body);
     await theater.save();
     res.status(201).json({
-      status: 'theater created successfully'
+      status: 'theater created successfully',
+      theater
     });
   } catch(error) {
     res.status(400).json({
@@ -20,10 +21,10 @@ exports.addTheater = async (req, res) => {
 // To get all screens
 exports.getAllTheaters = async (req, res) => {
   try {
-    const screens = await Screen.find({});
+    const theaters = await Theater.find({});
     res.status(200).json({
       status: 'success',
-      screens
+      theaters
     });
   } catch(error) {
     res.status(400).json({
@@ -52,7 +53,7 @@ exports.theaterById = async (req,res)=>{
 // To update a screen
 exports.updateTheater = async (req, res) => {
   try {
-    await Screen.updateOne({ _id: req.params.screenId }, { $set: req.body });
+    await Theater.updateOne({ _id: req.params.screenId }, { $set: req.body });
     res.status(200).json({
       status: 'success'
     });
