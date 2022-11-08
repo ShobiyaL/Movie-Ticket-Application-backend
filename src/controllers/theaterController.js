@@ -6,7 +6,7 @@ exports.addTheater = async (req, res) => {
     const theater = new Theater(req.body);
     await theater.save();
     res.status(201).json({
-      status: 'theater created successfully',
+      message: 'theater created successfully',
       theater
     });
   } catch(error) {
@@ -18,12 +18,12 @@ exports.addTheater = async (req, res) => {
   }
 };
 
-// To get all screens
+// To get all theaters
 exports.getAllTheaters = async (req, res) => {
   try {
     const theaters = await Theater.find({});
     res.status(200).json({
-      status: 'success',
+      message: 'success',
       theaters
     });
   } catch(error) {
@@ -35,12 +35,12 @@ exports.getAllTheaters = async (req, res) => {
   }
 };
 
-//Get Particular theater
+//Get Particular theater by Id
 exports.theaterById = async (req,res)=>{
   try {
-    const theater = await Theater.findById({ _id: req.params.movieId });
+    const theater = await Theater.findById({ _id: req.params.theaterId });
     res.status(200).json({
-      status: 'success',
+      message: 'success',
       theater
     });
   } catch(error) {
@@ -50,12 +50,75 @@ exports.theaterById = async (req,res)=>{
     })
   }
 }
-// To update a screen
+//Get Particular theater by city
+exports.theaterByCity = async (req,res)=>{
+  try {
+    const theater = await Theater.find({ city: req.params.city });
+    res.status(200).json({
+      message: 'success',
+      theater
+    });
+  } catch(error) {
+    res.status(400).json({
+      message:"unable to get theater",
+      error
+    })
+  }
+}
+//Get Particular theater by city and moviesName
+exports.tByCityMovieName= async (req,res)=>{
+  
+  try {
+    const theater = await Theater.find({ city: req.params.city,movieName:req.params.movieName });
+    
+    res.status(200).json({
+      message: 'success',
+      theater
+    });
+  } catch(error) {
+    res.status(400).json({
+      message:"unable to get theater",
+      error
+    })
+  }
+}
+//Get Particular theater by city and moviesName
+exports.cities= async (req,res)=>{
+  
+  try {
+    const location = await Theater.find({},{city:1,_id:0});
+    res.status(200).json({ 
+      location
+    });
+  } catch(error) {
+    res.status(400).json({
+      message:"unable to get theater",
+      error
+    })
+  }
+}
+// Get Particular theater by moviename
+exports.theaterByMovieName = async (req,res)=>{
+  try {
+    const theater = await Theater.find({ movieName: req.params.movieName });
+    res.status(200).json({
+      message: 'success',
+      theater
+    });
+  } catch(error) {
+    res.status(400).json({
+      message:"unable to get theater",
+      error
+    })
+  }
+}
+
+// To update a theater
 exports.updateTheater = async (req, res) => {
   try {
     await Theater.updateOne({ _id: req.params.screenId }, { $set: req.body });
     res.status(200).json({
-      status: 'success'
+      message: 'success'
     });
   } catch(error) {
     res.status(400).json({
@@ -65,3 +128,4 @@ exports.updateTheater = async (req, res) => {
     
   }
 };
+

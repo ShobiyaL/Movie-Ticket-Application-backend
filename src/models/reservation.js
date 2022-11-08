@@ -4,55 +4,47 @@ const { Schema } = mongoose;
 const reservationSchema = new Schema({
   date: {
     type: Date,
-    required: [true, 'Please provide date']
+    required: true,
   },
   startAt: {
     type: String,
-    required: [true, 'Please provide movie starting time'],
-    trim: true
+    required: true,
+    trim: true,
   },
-  selectedSeats: {
-    type: Array,
-    required: [true, 'Please provide seats']
+  seats: {
+    type: [Schema.Types.Mixed],
+    required: true,
   },
-  totalPrice: {
+  ticketPrice: {
     type: Number,
-    required: [true, 'Please provide ticket price']
+    required: true,
   },
-  totalSeats: {
+  total: {
     type: Number,
-    required: [true, 'Please provide total seats']
+    required: true,
   },
   movieId: {
     type: Schema.Types.ObjectId,
     ref: 'Movie',
-    required: [true, 'Please provide movie id']
+    required: true,
   },
-  movie: {
-    type: String,
-    required: [true, 'Please provide movie name']
-  },
-  screenId: {
+  theaterId: {
     type: Schema.Types.ObjectId,
-    ref: 'Screen',
-    required: [true, 'Please provide screen id']
+    ref: 'Theater',
+    required: true,
   },
-  selectedCinema: {
+  username: {
     type: String,
-    required: [true, 'Please provide movie screen name']
+    required: true,
   },
   emailId: {
     type: String,
     required: [true, 'Please provide email-id']
   },
-  name: {
-    type: String,
-    required: [true, 'Please provide name']
+  checkin: {
+    type: Boolean,
+    default: false,
   },
-  paymentStatus: {
-    type: String,
-    required: [true, 'Please provide payment status']
-  }
 });
 
 const Reservation = mongoose.model('Reservation', reservationSchema);

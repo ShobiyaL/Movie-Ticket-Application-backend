@@ -11,7 +11,7 @@ exports.signUpUser = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      message: "Unable to signup",
+      message: "Unable to signup user already exists",
       error,
     });
   }

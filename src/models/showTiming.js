@@ -23,9 +23,9 @@ const showTimingSchema = new Schema({
     ref: 'Movie',
     required: [true, 'Please provide movie id']
   },
-  screenId: {
+  theaterId: {
     type: Schema.Types.ObjectId,
-    ref: 'Screen',
+    ref: 'Theater',
     required: [true, 'Please provide screen id']
   }
 });

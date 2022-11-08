@@ -11,7 +11,7 @@ const router = express.Router();
 
 router
   .get('/', getAllShowTimings)
-  .get('/reserved-seats', getReservedSeats)
+  .get('/reservedSeats', getReservedSeats)
   .get('/:movieId', getShowTimings)
   .post('/', addShowTiming)
   .patch('/:showTimingId', updateShowTiming);

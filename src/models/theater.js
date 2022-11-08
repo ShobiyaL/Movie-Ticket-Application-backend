@@ -8,6 +8,9 @@ const theaterSchema = new Schema({
     required: true,
     trim: true,
   },
+  movieName:{
+    type: String,
+  },
   ticketPrice: {
     type: Number,
     required: true,
