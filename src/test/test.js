@@ -3,8 +3,7 @@ var assert = require('assert')
 var http = require('http')
 var request = require('supertest')
 var timeout = require('..')
-const supertest = require('supertest');
-const app = require("../server");
+
 describe('timeout()', function () {
   it('should have a default timeout', function (done) {
     this.timeout(10000)
