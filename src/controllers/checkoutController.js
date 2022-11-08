@@ -6,7 +6,7 @@ const { ObjectId } = mongoose.Types;
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const Reservation = require('../models/reservation');
-const AppError = require('../utils/appError');
+// const AppError = require('../utils/appError');
 
 // To generate a checkout session
 exports.createCheckoutSession = async (req, res, next) => {

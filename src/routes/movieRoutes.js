@@ -3,7 +3,8 @@ const {
   addMovie,
   getMovies,  
   updateMovie,
-  getMovie
+  getMovie,
+  getMovieByName
 } = require('../controllers/movieController');
 
 const router = express.Router();
@@ -12,6 +13,6 @@ router
   .get('/', getMovies)
   .post('/addMovie', addMovie)
   .patch('/:movieId', updateMovie)
-  .get('/:movieId', getMovie);
-
+  .get('/:movieId', getMovie)
+  .get('/name/:movieName', getMovieByName);
 module.exports = router;

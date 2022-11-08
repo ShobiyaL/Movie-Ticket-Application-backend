@@ -12,7 +12,7 @@ const theaterRoutes = require('./routes/theaterRoutes');
 // const showTimingRoutes = require('./routes/showTimingRoutes');
 // const reservationRoutes = require('./routes/reservationRoutes');
 // const checkoutRoutes = require('./routes/checkoutRoutes');
-// const stripeEventRoutes = require('./routes/stripeEventRoutes');
+const stripeEventRoutes = require('./routes/stripeEventRoutes');
 
  const globalErrorHandler = require('./controllers/errorController');
 
@@ -22,11 +22,11 @@ const app = express();
 // global.logger = logger;
 
 // Stripe webhook
-// app.use(
-//   '/webhook',
-//   express.raw({ type: 'application/json' }),
-//   stripeEventRoutes
-// );
+app.use(
+  '/webhook',
+  express.raw({ type: 'application/json' }),
+  stripeEventRoutes
+);
 
 // Middlewares
 app.use(express.json());
