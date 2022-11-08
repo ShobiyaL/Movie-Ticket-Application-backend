@@ -2,7 +2,7 @@
 var assert = require('assert')
 var http = require('http')
 var request = require('supertest')
-var timeout = require('..')
+var timeout = require('../index')
 
 describe('timeout()', function () {
   it('should have a default timeout', function (done) {
