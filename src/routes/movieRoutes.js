@@ -4,7 +4,8 @@ const {
   getMovies,  
   updateMovie,
   getMovie,
-  getMovieByName
+  getMovieByName,
+  
 } = require('../controllers/movieController');
 
 const router = express.Router();
@@ -15,4 +16,5 @@ router
   .patch('/:movieId', updateMovie)
   .get('/:movieId', getMovie)
   .get('/name/:movieName', getMovieByName);
+  
 module.exports = router;

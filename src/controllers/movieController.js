@@ -66,8 +66,8 @@ exports.getMovie = async (req, res) => {
 // To get a movie by name
 exports.getMovieByName = async (req, res) => {
   try {
-    console.log(req.params);
-    const movie = await Movie.findOne({title:req.params.movieName});
+    // console.log(req.params);
+    const movie = await Movie.find({title:req.params.movieName});
     res.status(200).json({
       status: 'success',
       movie

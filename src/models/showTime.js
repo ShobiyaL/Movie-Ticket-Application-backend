@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const showTimingSchema = new Schema({
+const showTimeSchema = new Schema({
   startAt: {
-    type: String,
+    type: Array,
     required: [true, 'Please provide show starting time'],
     trim: true
   },
@@ -11,13 +11,7 @@ const showTimingSchema = new Schema({
     type: Date,
     required: [true, 'Please provide show date']
   },
-  endDate: {
-    type: Date,
-    required: [true, 'Please provide show end date']
-  },
-  reservedSeats: {
-    type: Array
-  },
+  
   movieId: {
     type: Schema.Types.ObjectId,
     ref: 'Movie',
@@ -26,10 +20,10 @@ const showTimingSchema = new Schema({
   theaterId: {
     type: Schema.Types.ObjectId,
     ref: 'Theater',
-    required: [true, 'Please provide screen id']
+    required: [true, 'Please provide Theater id']
   }
 });
 
-const ShowTiming = mongoose.model('ShowTiming', showTimingSchema);
+const ShowTime = mongoose.model('ShowTime', showTimeSchema);
 
-module.exports = ShowTiming;
+module.exports = ShowTime;

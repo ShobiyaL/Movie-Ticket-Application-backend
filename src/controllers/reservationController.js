@@ -13,9 +13,7 @@ exports.createReservation = async (req, res) => {
     const reservation = new Reservation(req.body);
     await reservation.save();
 
-    // Update reserved seats in showTiming collection for this specific show
-    req.body.reservationId = reservation._id.toString();
-    updateShowTiming(req, res);
+    
   } catch {
     next(new AppError('Unable to reserve at the moment', 400));
   }

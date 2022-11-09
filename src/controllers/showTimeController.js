@@ -1,55 +1,56 @@
 const mongoose = require('mongoose');
 
-const ShowTiming = require('../models/showTiming');
+const ShowTime= require('../models/showTime');
 const { createCheckoutSession } = require('./checkoutController');
-// const AppError = require('../utils/appError');
+
 
 const { ObjectId } = mongoose.Types;
 
 // To add a showTiming
-exports.addShowTiming = async (req, res) => {
-  // req.body.date = new Date(req.body.date);
+exports.addShowTime = async (req, res) => {
+  req.body.date = new Date(req.body.date);
+
   try {
-    const showTiming = new ShowTiming(req.body);
-    await showTiming.save();
+    const showTime = new ShowTime(req.body);
+    await showTime.save();
     res.status(201).json({
       message: 'success',
-      showTiming
+      showTime
     });
   } catch(error) {
     res.status(400).json({
-      message: 'Failed to add Show timings',
-      error
-    });
+        message: 'failure',
+        error
+      });
     
   }
 };
 
-// To get all showTimings
-exports.getAllShowTimings = async (req, res, ) => {
+// To get all showTime
+exports.getAllShowTimes = async (req, res) => {
   try {
-    const showTimings = await ShowTiming.find({});
+    const showTime = await ShowTime.find({});
     res.status(200).json({
       message: 'success',
-      showTimings
+      showTime
     });
-  } catch(error) {
+  }catch(error) {
     res.status(400).json({
-      message: 'Failed to add Show timings',
-      error
-    });
+        message: 'failure',
+        error
+      });
     
   }
 };
 
 // To get all reserved seats
-exports.getReservedSeats = async (req, res ) => {
-  const { startAt, screenId, date } = req.query;
+exports.getReservedSeats = async (req, res, next) => {
+  const { startAt, theaterId, date } = req.query;
   try {
-    const reservedSeats = await ShowTiming.find(
+    const reservedSeats = await ShowTime.find(
       {
         startAt: { $eq: startAt },
-        screenId: { $eq: screenId },
+        theaterId: { $eq: theaterId },
         date: new Date(date)
       },
       { reservedSeats: 1 }
@@ -60,18 +61,19 @@ exports.getReservedSeats = async (req, res ) => {
     });
   } catch(error) {
     res.status(400).json({
-      message: 'Failed',
-      error
-    });
+        message: 'failure',
+        error
+      });
+    
   }
 };
 
-// To get showtimings and screens based on movie id
-exports.getShowTimings = async (req, res ) => {
+// To get showTime and theater based on movie id
+exports.getShowTime = async (req, res, next) => {
   const { selectedDate } = req.query;
   const { movieId } = req.params;
   try {
-    const showTimings = await ShowTiming.aggregate([
+    const showTime = await ShowTime.aggregate([
       {
         $match: {
           movieId: ObjectId(`${movieId}`),
@@ -93,31 +95,31 @@ exports.getShowTimings = async (req, res ) => {
 
     res.status(200).json({
       message: 'success',
-      showTimings
+      showTime
     });
   } catch(error) {
     res.status(400).json({
-      message: 'Failed',
-      error
-    });
+        message: 'failure',
+        error
+      });
+    
   }
-  
 };
 
 // To update a showTiming
-exports.updateShowTiming = async (req, res ) => {
+exports.updateShowTime = async (req, res, next) => {
   try {
-    await ShowTiming.updateOne(
+    await ShowTime.updateOne(
       { _id: req.body.showTimeId },
       { $push: { reservedSeats: req.body.selectedSeats } }
     );
-    // Go to  middleware for creating stripe checkout seesion
-    createCheckoutSession(req, res );
-  }catch(error) {
+    // Go to next middleware for creating stripe checkout seesion
+    createCheckoutSession(req, res, next);
+  } catch(error) {
     res.status(400).json({
-      message: 'Failed to update Show timings',
-      error
-    });
+        message: 'failure',
+        error
+      });
     
   }
 };

@@ -8,9 +8,11 @@ const theaterSchema = new Schema({
     required: true,
     trim: true,
   },
-  movieName:{
-    type: String,
-  },
+   movieId:{
+      type: mongoose.Schema.Types.ObjectId,
+     ref:'Movie',
+     required:true,
+    },
   ticketPrice: {
     type: Number,
     required: true,

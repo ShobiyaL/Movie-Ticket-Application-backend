@@ -11,7 +11,7 @@ const reservationSchema = new Schema({
     required: true,
     trim: true,
   },
-  seats: {
+  reservedSeats: {
     type: [Schema.Types.Mixed],
     required: true,
   },
@@ -32,6 +32,10 @@ const reservationSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Theater',
     required: true,
+  },
+  showTimeId:{
+    type: Schema.Types.ObjectId,
+    
   },
   username: {
     type: String,
