@@ -44,7 +44,7 @@ exports.getAllShowTimes = async (req, res) => {
 };
 
 // To get all reserved seats
-exports.getReservedSeats = async (req, res, next) => {
+exports.getReservedSeats = async (req, res) => {
   const { startAt, theaterId, date } = req.query;
   try {
     const reservedSeats = await ShowTime.find(
@@ -69,7 +69,7 @@ exports.getReservedSeats = async (req, res, next) => {
 };
 
 // To get showTime and theater based on movie id
-exports.getShowTime = async (req, res, next) => {
+exports.getShowTime = async (req, res) => {
   const { selectedDate } = req.query;
   const { movieId } = req.params;
   try {
@@ -82,8 +82,8 @@ exports.getShowTime = async (req, res, next) => {
       },
       {
         $lookup: {
-          from: 'screens',
-          localField: 'screenId',
+          from: 'theater',
+          localField: 'theaterId',
           foreignField: '_id',
           as: 'screen_details'
         }

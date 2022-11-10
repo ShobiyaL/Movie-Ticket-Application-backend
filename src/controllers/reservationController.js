@@ -3,19 +3,26 @@ const mongoose = require('mongoose');
 
 const { ObjectId } = mongoose.Types;
 const Reservation = require('../models/reservation');
-const AppError = require('../utils/appError');
-const { updateShowTiming } = require('./showTimingController');
+
+const { updateShowTiming } = require('./showTimeController');
 
 // To create a reservation
 exports.createReservation = async (req, res) => {
   req.body.date = new Date(req.body.date);
+  console.log(req.body.date);
   try {
     const reservation = new Reservation(req.body);
+    console.log(reservation);
     await reservation.save();
 
-    
-  } catch {
-    next(new AppError('Unable to reserve at the moment', 400));
+    // Update reserved seats in showTiming collection for this specific show
+    req.body.reservationId = reservation._id.toString();
+    updateShowTiming(req, res);
+  } catch(error) {
+    res.status(400).json({
+      message:"failure",
+      error
+    })
   }
 };
 
@@ -32,13 +39,15 @@ exports.getAllReservations = async (req, res) => {
       status: 'success',
       reservations
     });
-  } catch {
-    next(new AppError('Unable to fetch reservations at the moment', 400));
+  } catch(error) {
+    res.status(400).json({
+      message:"failure"
+    })
   }
 };
 
 // To get reservation based on checkout session id
-exports.getReservation = async (req, res, next) => {
+exports.getReservation = async (req, res) => {
   const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
 
   try {
@@ -48,7 +57,9 @@ exports.getReservation = async (req, res, next) => {
     res.status(200).json({
       reservation
     });
-  } catch {
-    next(new AppError('Unable to update the reservation at the moment', 400));
+  } catch(error) {
+    res.status(400).json({
+      message:"failure"
+    })
   }
 };

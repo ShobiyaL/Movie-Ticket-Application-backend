@@ -10,8 +10,8 @@ const userRoutes = require('./routes/userRoutes');
 const movieRoutes = require('./routes/movieRoutes');
 const theaterRoutes = require('./routes/theaterRoutes');
  const showTimeRoutes = require('./routes/showTimeRoutes');
-// const reservationRoutes = require('./routes/reservationRoutes');
-// const checkoutRoutes = require('./routes/checkoutRoutes');
+const reservationRoutes = require('./routes/reservationRoutes');
+ const checkoutRoutes = require('./routes/checkoutRoutes');
 const stripeEventRoutes = require('./routes/stripeEventRoutes');
 
  const globalErrorHandler = require('./controllers/errorController');
@@ -41,8 +41,8 @@ app.options('*', cors());
 app.use('/api/movie', movieRoutes);
 app.use('/api/theater', theaterRoutes);
   app.use('/api/showTime', showTimeRoutes);
-// app.use('/api/reservation', reservationRoutes);
-// app.use('/api/checkout', checkoutRoutes);
+app.use('/api/reservation', reservationRoutes);
+app.use('/api/checkout', checkoutRoutes);
 
 
 

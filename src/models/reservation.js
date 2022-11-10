@@ -35,7 +35,8 @@ const reservationSchema = new Schema({
   },
   showTimeId:{
     type: Schema.Types.ObjectId,
-    
+ref:'ShowTime',
+required: true,
   },
   username: {
     type: String,
@@ -45,7 +46,7 @@ const reservationSchema = new Schema({
     type: String,
     required: [true, 'Please provide email-id']
   },
-  checkin: {
+  checkout: {
     type: Boolean,
     default: false,
   },

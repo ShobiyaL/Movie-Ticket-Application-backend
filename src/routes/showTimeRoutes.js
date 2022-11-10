@@ -14,6 +14,6 @@ router
   .get('/reserved-seats', getReservedSeats)
   .get('/:movieId', getShowTime)
   .post('/addShowTime', addShowTime)
-  .patch('/:showTimingId', updateShowTime);
+  .patch('/:showTimeId', updateShowTime);
 
 module.exports = router;

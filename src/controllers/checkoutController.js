@@ -36,8 +36,12 @@ exports.createCheckoutSession = async (req, res, next) => {
       reservationId,
       sessionId: session.id
     });
-  } catch {
-    next(new AppError('Unable to create movie at the moment', 400));
+  } catch(error) {
+    res.status(400).json({
+        message: 'failure',
+        error
+      });
+    
   }
 };
 
