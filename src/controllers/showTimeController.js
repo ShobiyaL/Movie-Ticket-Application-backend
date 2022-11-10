@@ -45,7 +45,9 @@ exports.getAllShowTimes = async (req, res) => {
 
 // To get all reserved seats
 exports.getReservedSeats = async (req, res) => {
-  const { startAt, theaterId, date } = req.query;
+  
+  const { startAt, theaterId, date, } = req.query;
+  // console.log(new Date(date));
   try {
     const reservedSeats = await ShowTime.find(
       {
@@ -55,6 +57,7 @@ exports.getReservedSeats = async (req, res) => {
       },
       { reservedSeats: 1 }
     ).exec();
+    console.log(reservedSeats);
     res.status(200).json({
       message: 'success',
       reservedSeats
@@ -71,7 +74,9 @@ exports.getReservedSeats = async (req, res) => {
 // To get showTime and theater based on movie id
 exports.getShowTime = async (req, res) => {
   const { selectedDate } = req.query;
+  // console.log(selectedDate)
   const { movieId } = req.params;
+  // console.log(movieId);
   try {
     const showTime = await ShowTime.aggregate([
       {
@@ -82,14 +87,14 @@ exports.getShowTime = async (req, res) => {
       },
       {
         $lookup: {
-          from: 'theater',
+          from: 'theaters',
           localField: 'theaterId',
           foreignField: '_id',
-          as: 'screen_details'
+          as: 'theater_details'
         }
       },
       {
-        $unset: ['screen_details._id']
+        $unset: ['theater_details._id']
       }
     ]);
 
@@ -107,14 +112,14 @@ exports.getShowTime = async (req, res) => {
 };
 
 // To update a showTiming
-exports.updateShowTime = async (req, res, next) => {
+exports.updateShowTime = async (req, res) => {
   try {
     await ShowTime.updateOne(
       { _id: req.body.showTimeId },
       { $push: { reservedSeats: req.body.selectedSeats } }
     );
     // Go to next middleware for creating stripe checkout seesion
-    createCheckoutSession(req, res, next);
+    createCheckoutSession(req, res);
   } catch(error) {
     res.status(400).json({
         message: 'failure',

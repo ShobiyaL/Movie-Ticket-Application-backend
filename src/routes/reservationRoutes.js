@@ -2,14 +2,14 @@ const express = require('express');
 const {
   createReservation,
   getAllReservations,
-  getReservation
+  // getReservation
 } = require('../controllers/reservationController');
 
 const router = express.Router();
 
 router
   .get('/', getAllReservations)
-  .post('/', createReservation)
-  .get('/:sessionId', getReservation);
+  .post('/', createReservation);
+  // .get('/:sessionId', getReservation);
 
 module.exports = router;

@@ -1,10 +1,10 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const mongoose = require('mongoose');
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const mongoose = require("mongoose");
 
 const { ObjectId } = mongoose.Types;
-const Reservation = require('../models/reservation');
+const Reservation = require("../models/reservation");
 
-const { updateShowTiming } = require('./showTimeController');
+const { updateShowTiming } = require("./showTimeController");
 
 // To create a reservation
 exports.createReservation = async (req, res) => {
@@ -18,48 +18,48 @@ exports.createReservation = async (req, res) => {
     // Update reserved seats in showTiming collection for this specific show
     req.body.reservationId = reservation._id.toString();
     updateShowTiming(req, res);
-  } catch(error) {
+  } catch (error) {
     res.status(400).json({
-      message:"failure",
-      error
-    })
+      message: "failure",
+      error,
+    });
   }
 };
 
 // To get all reservations of a user
 exports.getAllReservations = async (req, res) => {
-  const { startAt, screenId, date } = req.query;
+  const { startAt, theaterId } = req.params;
   try {
     const reservations = await Reservation.find({
       startAt: { $eq: startAt },
-      screenId: { $eq: screenId },
-      date: new Date(date)
+      theaterId: { $eq: theaterId },
     }).exec();
     res.status(200).json({
-      status: 'success',
-      reservations
+      status: "success",
+      reservations,
     });
-  } catch(error) {
+  } catch (error) {
     res.status(400).json({
-      message:"failure"
-    })
+      message: "failure",
+      error,
+    });
   }
 };
 
 // To get reservation based on checkout session id
-exports.getReservation = async (req, res) => {
-  const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
+// exports.getReservation = async (req, res) => {
+//   const session = await stripe.checkout.sessions.retrieve(req.params.sessionId);
 
-  try {
-    const reservation = await Reservation.findById(
-      ObjectId(session.client_reference_id)
-    );
-    res.status(200).json({
-      reservation
-    });
-  } catch(error) {
-    res.status(400).json({
-      message:"failure"
-    })
-  }
-};
+//   try {
+//     const reservation = await Reservation.findById(
+//       ObjectId(session.client_reference_id)
+//     );
+//     res.status(200).json({
+//       reservation
+//     });
+//   } catch(error) {
+//     res.status(400).json({
+//       message:"failure"
+//     })
+//   }
+// };

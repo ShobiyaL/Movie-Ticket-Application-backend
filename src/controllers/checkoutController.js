@@ -4,9 +4,10 @@ require('dotenv').config();
 const { ObjectId } = mongoose.Types;
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+// console.log(stripe);
 
 const Reservation = require('../models/reservation');
-// const AppError = require('../utils/appError');
+
 
 // To generate a checkout session
 exports.createCheckoutSession = async (req, res, next) => {
@@ -20,10 +21,10 @@ exports.createCheckoutSession = async (req, res, next) => {
       line_items: [
         {
           amount: totalPrice * 100,
-          currency: 'sek',
+          currency: 'inr',
           name: movie,
           quantity: 1,
-          images: [movieImg]
+          
         }
       ],
       mode: 'payment',
