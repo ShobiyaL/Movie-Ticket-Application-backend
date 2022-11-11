@@ -11,6 +11,9 @@ const showTimeSchema = new Schema({
     type: Date,
     required: [true, 'Please provide show date']
   },
+  reservedSeats:{
+     type:Array,
+  },
   
   movieId: {
     type: Schema.Types.ObjectId,
