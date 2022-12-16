@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const showTimeSchema = new Schema({
   startAt: {
-    type: Array,
+    type: String,
     required: [true, 'Please provide show starting time'],
     trim: true
   },

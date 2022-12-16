@@ -55,19 +55,20 @@ exports.theaterByCity = async (req,res)=>{
   try {
     let arr=[];
     const theater = await Theater.find({ city: req.params.city });
-    // console.log(theater,"theater")
+    //  console.log(theater,"theater")
     let val = theater;
     for(let i=0;i<theater.length;i++){
       let obj = theater[i];
       // console.log(obj,"object")
       if(obj.movieId){
         let mId = obj.movieId
-        // console.log(mId,"movieId")
+      //  console.log(mId,"movieId")
         const movie = await Movie.findById(mId);
-        val[i].movieId=movie
+        // console.log(movie);
+        val[i]=movie
       }
     }
-    console.log(val,"value")
+    //  console.log(val,"value")
     res.status(200).json({
       message: 'success',
       val
